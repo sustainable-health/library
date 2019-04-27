@@ -83,7 +83,7 @@ main = checkArgs <$> getArgs >>=
 
     paginate <- buildPaginateWith postsGrouper postsPattern postsPageId
 
-    match "index.markdown" $ do
+ {-   match "index.markdown" $ do
       route $ setExtension "html"
       compile $ do
         let
@@ -95,28 +95,26 @@ main = checkArgs <$> getArgs >>=
          >>= applyAsTemplate indexCtx
          >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
          >>= loadAndApplyTemplate "templates/default.html" indexCtx
-         >>= relativizeUrls
+         >>= relativizeUrls -}
 
-{-
- -    paginateRules paginate $ \page pattern -> do
- -        route idRoute
- -        compile $ do
- -            posts <- recentFirst =<< loadAllSnapshots pattern "content"
- -            let indexCtx =
- -                    constField "title" (if page == 1 then "Latest blog posts"
- -                                                     else "Blog posts, page " ++ show page) <>
- -                    listField "posts" (previewCtx tags) (return posts) <>
- -                    paginateContextPlus paginate page <>
- -                    mainCtx tags postsPattern
- -
- -            makeItem ""
- -                >>= applyAsTemplate indexCtx
- -                -- >>= loadAndApplyTemplate "templates/posts-preview-list.html" indexCtx
- -                >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
- -                >>= loadAndApplyTemplate "templates/default.html" indexCtx
- -                >>= relativizeUrls
- -
- -}
+    paginateRules paginate $ \page pattern -> do
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAllSnapshots pattern "content"
+            let indexCtx =
+                    constField "title" (if page == 1 then "Latest blog posts"
+                                                     else "Blog posts, page " ++ show page) <>
+                    listField "posts" (previewCtx tags) (return posts) <>
+                    paginateContextPlus paginate page <>
+                    mainCtx tags postsPattern
+
+            makeItem ""
+                >>= applyAsTemplate indexCtx
+                >>= loadAndApplyTemplate "templates/posts-preview-list.html" indexCtx
+                >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
+                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= relativizeUrls
+
     match "templates/*" $ compile templateCompiler
 
 
