@@ -25,12 +25,26 @@ main = checkArgs <$> getArgs >>=
         route   idRoute
         compile copyFileCompiler
 
-    match (fromList ["pages/about.md", "pages/404.md"]) $ do
+   {-- match (fromList ["pages/about.md", "pages/404.md"]) $ do
         route   $ stripPages `composeRoutes` setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+            >>= relativizeUrls --}
+
+    match "about.md" $ do
+        route  $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/page.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls 
+
+    match "404.md" $ do
+        route  $ setExtension "html"
+        compile $ pandocCompiler
+            >>= loadAndApplyTemplate "templates/page1.html" defaultContext
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls 
 
     tags <- buildTags postsPattern (fromCapture "tags/*.html")
 

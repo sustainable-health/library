@@ -1,5 +1,5 @@
 ---
-title: Sustaniable health 
+title: Sustainable health 
 subtitle: in a climate changing world
 ---
 
