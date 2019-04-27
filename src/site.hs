@@ -49,7 +49,7 @@ main = checkArgs <$> getArgs >>=
     tags <- buildTags postsPattern (fromCapture "tags/*.html")
 
     tagsRules tags $ \tag pattern -> do
-        let title = "Posts tagged " ++ tag
+        let title = "Results for " ++ tag
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll pattern
