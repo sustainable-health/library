@@ -4,3 +4,6 @@ _draftSite/
 _draftCache/
 dist/
 *.swp
+.stack-work/
+stack.yaml
+
