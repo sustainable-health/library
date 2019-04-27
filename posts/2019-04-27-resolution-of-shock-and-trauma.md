@@ -3,7 +3,7 @@ title: Resolution of shock and trauma
 tags: shock, trauma, panic
 ---
 
-<!-- <img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" /> -->
+<img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" />
 
 ## How is Shock Different From Trauma?
 
