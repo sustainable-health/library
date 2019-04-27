@@ -1,12 +1,12 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import Control.Applicative ((<$>))
-import Control.Monad (liftM)
-import Data.List (partition)
-import qualified Data.Map as M
-import Data.Monoid ((<>))
-import System.Environment (getArgs, withArgs)
-import Hakyll
+import           Control.Applicative ((<$>))
+import           Control.Monad       (liftM)
+import           Data.List           (partition)
+import qualified Data.Map            as M
+import           Data.Monoid         ((<>))
+import           Hakyll
+import           System.Environment  (getArgs, withArgs)
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -81,27 +81,42 @@ main = checkArgs <$> getArgs >>=
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
-
     paginate <- buildPaginateWith postsGrouper postsPattern postsPageId
 
-    paginateRules paginate $ \page pattern -> do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAllSnapshots pattern "content"
-            let indexCtx =
-                    constField "title" (if page == 1 then "Latest blog posts"
-                                                     else "Blog posts, page " ++ show page) <>
-                    listField "posts" (previewCtx tags) (return posts) <>
-                    paginateContextPlus paginate page <>
-                    mainCtx tags postsPattern
+    match "index.markdown" $ do
+      route $ setExtension "html"
+      compile $ do
+        let
+          indexCtx =
+            constField "title" "Index" `mappend`
+            defaultContext
 
-            makeItem ""
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/posts-preview-list.html" indexCtx
-                >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
+        pandocCompiler
+         >>= applyAsTemplate indexCtx
+         >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
+         >>= loadAndApplyTemplate "templates/default.html" indexCtx
+         >>= relativizeUrls
 
+{-
+ -    paginateRules paginate $ \page pattern -> do
+ -        route idRoute
+ -        compile $ do
+ -            posts <- recentFirst =<< loadAllSnapshots pattern "content"
+ -            let indexCtx =
+ -                    constField "title" (if page == 1 then "Latest blog posts"
+ -                                                     else "Blog posts, page " ++ show page) <>
+ -                    listField "posts" (previewCtx tags) (return posts) <>
+ -                    paginateContextPlus paginate page <>
+ -                    mainCtx tags postsPattern
+ -
+ -            makeItem ""
+ -                >>= applyAsTemplate indexCtx
+ -                -- >>= loadAndApplyTemplate "templates/posts-preview-list.html" indexCtx
+ -                >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
+ -                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+ -                >>= relativizeUrls
+ -
+ -}
     match "templates/*" $ compile templateCompiler
 
 
