@@ -67,7 +67,7 @@ main = checkArgs <$> getArgs >>=
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/post-with-comment.html" defaultContext
+            -- >>= loadAndApplyTemplate "templates/post-with-comment.html" defaultContext
             >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
