@@ -2,6 +2,7 @@
 title: Respiratory conditions
 tags: lung, flu, asthma
 author: encyclopaedia Britannica
+background: breath.jpg
 ---
 
 <img src="/images/lungs.jpg" style="float: left; margin: 10px;" width="200" height="200" />
