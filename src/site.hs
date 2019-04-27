@@ -102,7 +102,7 @@ main = checkArgs <$> getArgs >>=
         compile $ do
             posts <- recentFirst =<< loadAllSnapshots pattern "content"
             let indexCtx =
-                    constField "title" (if page == 1 then "Latest blog posts"
+                    constField "title" (if page == 1 then "Reception desk"
                                                      else "Blog posts, page " ++ show page) <>
                     listField "posts" (previewCtx tags) (return posts) <>
                     paginateContextPlus paginate page <>

@@ -1,31 +1,19 @@
 ---
-title: About me
-subtitle: Who I am and what I'm doing
+title: Sustaniable health 
+subtitle: in a climate changing world
 ---
 
-Hi! I'm Mike Limansky. I was born in 1982 in USSR, and I've been living in Russia.
+The Sustainable Health Cultural Library contains resources that
 
-I'm software developer with experience in different languages.  I spent lot of time
-writing in C++, but now I'm mostly using Scala both for my work, and my hobby projects.
+  * address the health consequences of climate change
+  * are empowerment based and available readily
+  * are without contraindications.
 
-### Some of the projects:
+Sustainable Health for a Climate Changing World represents a systemic shift in our understanding of health and healthcare as well as how it is delivered. It restores authority for health and vitality to the individual, the family and the community. It puts people rather than bureaucracies in the center. This is not a philosophy. It is a necessity. Unless people reclaim their agency in regard to their own wellbeing and the wellbeing of their families and communities, we will all be victimized by the adverse consequences of climate change. Now, before debilitating impacts increase, is the time to prepare through empowerment based, grassroots healthcare preparation that is, simultaneously, regenerative.
 
-* [BeanPurée](https://github.com/limansky/beanpuree). Scala library connecting JavaBeans
-  and shapeless.
-* [MongoQuery](https://github.com/limansky/mongoquery). Scala library to provide string
-  interpolators for MongoDB objects.  Supports multiple backend drivers.
-* [TinyMount](https://github.com/limansky/tinymount). Qt-based tray mounter for Linux.
-  It uses UDisks for mounting.
-* [lift-salatauth](https://github.com/limansky/lift-salatauth). Plugin for the
-  [Lift framework]() to support authorization via
-  [Salat](https://github.com/novus/salat).
-* [lift-validate](https://github.com/limansky/lift-validate). Plugin for the
-  [Lift framework]() to add [jQuery validation](http://jqueryvalidation.org/) support.
+The Atlantic, in its July 2018 Science section published a series on the profound mental health impacts of climate change. The brutal finding that suicide rates increase during peak heat periods adds painfully to the data being assembled on rising global suicide rates. Another larger 765,000 person study demonstrates that high night-time temperatures create severe sleep problems (Science Advances, 2015), showing a marked impact on mortality, particularly for the elderly. This is the largest study correlating climate change and mental health to date.
 
-### Not only programming
+Sustainable Health for a Climate Changing World is part of a larger experience of reconnection to indigenous wisdom and relationship with the natural world that is inherently regenerative. There are resources within the human body and the natural world to combat severe temperature and other climate related challenges. Nature is not merely a resource; it is a friend; a family member; an ally and a guide. When we cultivate the self-awareness that is essential for true health we awaken inner wisdom that shows us how we are partnered with nature.
 
-At my free time I like to play the guitar (both electric and acoustic) and the
-bass guitar.  Also I'm interesting in the nature photography (most of the photos
-on this site is taken by me).
 
-[Lift framework]: http://liftweb.net
+
