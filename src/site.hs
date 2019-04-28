@@ -72,7 +72,7 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls --}
 
-    match "posts/*/*" $ do
+    match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
             >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
@@ -85,7 +85,7 @@ main = checkArgs <$> getArgs >>=
             content <- pandocCompiler >>= saveSnapshot "content"
             let md = itemIdentifier content
             sf <- getMetadataField' md "subfolder" 
-            sfPosts  <- loadAll $ fromGlob $ "posts/" <> sf <> "/*"
+            sfPosts  <- loadAll $ fromGlob $ "subfolders/" <> sf <> "/*"
             let recentPostsCtx =
                     listField "recentPosts" (postCtx tags) (return sfPosts) <>
                     defaultContext
