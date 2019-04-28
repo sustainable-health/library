@@ -1,8 +1,9 @@
 ---
 title: Resolution of shock and trauma
 tags: shock, trauma, panic
-author : Stephanie Mines
+author: Stephanie Mines
 background: World_France_Garden_maze_022035_.jpg
+subfolder: 1
 ---
 
 <img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" />

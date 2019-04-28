@@ -3,6 +3,7 @@ title: Pre- and perinatal life
 tags: birth, pregnancy
 author: Stephanie Mines
 background:  baby-ultrasound.png
+subfolder: 1
 ---
 
 <img src="/images/footprint1.jpg" style="float: left; margin: 10px;" width="200" height="200" />
