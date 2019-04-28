@@ -79,6 +79,21 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
+    match "posts/*" $ do
+        route $ setExtension "html"
+        compile $ do
+            content <- pandocCompiler >>= saveSnapshot "content"
+            let md = itemIdentifier content
+            sf <- getMetadataField' md "subfolder" 
+            sfPosts  <- loadAll $ fromGlob $ "posts/" <> sf <> "/*"
+            let recentPostsCtx =
+                    listField "recentPosts" (postCtx tags) (return sfPosts) <>
+                    defaultContext
+
+            loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> recentPostsCtx <> mainCtx tags postsPattern) content
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls    
+
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
