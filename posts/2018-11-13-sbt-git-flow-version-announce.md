@@ -2,7 +2,7 @@
 title: sbt-git-flow-version announcement
 tags: Scala, sbt, git, sbt-git-flow-version
 author: Limansky
-subfolder: 1
+subfolder: Old_posts
 ---
 
 I'd like to announce my new project called [sbt-git-flow-version](https://github.com/limansky/sbt-git-flow-version).
