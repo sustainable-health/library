@@ -63,14 +63,21 @@ main = checkArgs <$> getArgs >>=
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
-    match postsPattern $ do
+    {-- match postsPattern $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= saveSnapshot "content"
             -- >>= loadAndApplyTemplate "templates/post-with-comment.html" defaultContext
             >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+            >>= relativizeUrls --}
+
+    match "posts/*/*" $ do
+        route $ setExtension "html"
+        compile $ pandocCompiler 
+            >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
+            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+            >>= relativizeUrls    
 
     create ["atom.xml"] $ do
         route idRoute
