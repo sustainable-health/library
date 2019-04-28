@@ -46,7 +46,7 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls 
 
-    tags <- buildTags postsPattern (fromCapture "tags/*.html")
+    tags <- buildTags "topics/*" (fromCapture "tags/*.html")
 
     tagsRules tags $ \tag pattern -> do
         let title = "Results for " ++ tag
@@ -75,11 +75,11 @@ main = checkArgs <$> getArgs >>=
     match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
+            >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    match "posts/*" $ do
+    match "topics/*" $ do
         route $ setExtension "html"
         compile $ do
             content <- pandocCompiler >>= saveSnapshot "content"
@@ -90,19 +90,19 @@ main = checkArgs <$> getArgs >>=
                     listField "recentPosts" (postCtx tags) (return sfPosts) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> recentPostsCtx <> mainCtx tags postsPattern) content
+            loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    create ["atom.xml"] $ do
+    {-- create ["atom.xml"] $ do
         route idRoute
         compile $ do
             let feedCtx = (postCtx tags) <> bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots postsPattern "content"
-            renderAtom feedCfg feedCtx posts
+            renderAtom feedCfg feedCtx posts --}
 
-    create ["archive.html"] $ do
+    {-- create ["archive.html"] $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll postsPattern
@@ -115,9 +115,9 @@ main = checkArgs <$> getArgs >>=
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/page.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+                >>= relativizeUrls --}
 
-    paginate <- buildPaginateWith postsGrouper postsPattern postsPageId
+    paginate <- buildPaginateWith postsGrouper "topics/*" postsPageId
 
  {-   match "index.markdown" $ do
       route $ setExtension "html"
@@ -142,7 +142,7 @@ main = checkArgs <$> getArgs >>=
                                                      else "Blog posts, page " ++ show page) <>
                     listField "posts" (previewCtx tags) (return posts) <>
                     paginateContextPlus paginate page <>
-                    mainCtx tags postsPattern
+                    mainCtx tags "topics/*"
 
             makeItem ""
                 >>= applyAsTemplate indexCtx
@@ -158,8 +158,8 @@ main = checkArgs <$> getArgs >>=
 stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
-mainCtx tags postsPattern =
-    let recentPosts = postItems postsPattern >>= fmap (take 5) . recentFirst in
+mainCtx tags pattern =
+    let recentPosts = postItems "topics/*" >>= fmap (take 5) . recentFirst in
       listField "recentPosts" (previewCtx tags) recentPosts <>
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
@@ -195,8 +195,8 @@ checkArgs args = case partition (/= "--with-drafts") args of
       }
 
 postItems :: Pattern ->  Compiler [Item String]
-postItems postsPattern = do
-    identifiers <- getMatches postsPattern
+postItems pattern = do
+    identifiers <- getMatches "topics/*"
     return [Item identifier "" | identifier <- identifiers]
 
 postsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
