@@ -159,7 +159,11 @@ stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
+<<<<<<< Updated upstream
     let recentPosts = postItems "topics/*" >>= fmap (take 5) . recentFirst in
+=======
+    let recentPosts = angleItems "topics/*" >>= fmap (take 5) . recentFirst in
+>>>>>>> Stashed changes
       listField "recentPosts" (previewCtx tags) recentPosts <>
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext

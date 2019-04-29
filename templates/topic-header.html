@@ -1,0 +1,24 @@
+$if(background)$
+<header class="intro-header" style="background-image: url('/images/bg/$background$')">
+$else$
+<header class="intro-header" style="background-image: url('/images/bg/bubbles.jpg')">
+$endif$
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">
+        <div class="topic-heading">
+          <h1>$title$</h1>
+          $if(subtitle)$
+            <hr>
+            <h2>$subtitle$</h2>
+          $endif$
+          $if(author)$
+            <hr>
+            <h2>$author$</h2>
+          $endif$
+          <div class="tags">Tags $tags$</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
