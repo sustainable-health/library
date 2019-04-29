@@ -1,0 +1,62 @@
+$for(posts)$
+        <h1><a href="$url$">$title$</a></h1>
+        <p class="post-info">
+            Posted on $date$
+            $if(author)$
+                by $author$
+            $endif$
+        </p>
+        <p class="tags">$tags$</p>
+        $if(preview)$
+            $preview$
+            <a href="$url$" class="btn continue"><i class="fa fa-forward"></i>
+            $if(previewButton)$
+              $previewButton$
+            $else$
+              Continue reading
+            $endif$
+            </a>
+        $else$
+            $body$
+        $endif$
+$endfor$
+
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    $if(previousPageNum)$
+    <li>
+    $else$
+    <li class="disabled">
+    $endif$
+    $if(previousPageNum)$
+      <a href="$previousPageUrl$">
+    $else$
+      <a href="#">
+    $endif$
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    $for(pagesBefore)$
+    <li><a href="$pageUrl$">$pageNum$</a></li>
+    $endfor$
+    <li class="active">
+      <a href="#">$currentPageNum$<span class="sr-only">current</span></a>
+    </li>
+    $for(pagesAfter)$
+    <li><a href="$pageUrl$">$pageNum$</a></li>
+    $endfor$
+    $if(nextPageNum)$
+    <li>
+    $else$
+    <li class="disabled">
+    $endif$
+    $if(nextPageNum)$
+      <a href="$nextPageUrl$">
+    $else$
+      <a href="#">
+    $endif$
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ui>
+</nav>

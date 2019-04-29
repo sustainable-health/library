@@ -17,6 +17,10 @@ main = checkArgs <$> getArgs >>=
         route   idRoute
         compile copyFileCompiler
 
+    match "docs/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
@@ -25,14 +29,14 @@ main = checkArgs <$> getArgs >>=
         route   idRoute
         compile copyFileCompiler
 
-   {-- match (fromList ["pages/about.md", "pages/404.md"]) $ do
+    match (fromList ["pages/about.md", "pages/404.md"]) $ do
         route   $ stripPages `composeRoutes` setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls --}
+            >>= relativizeUrls 
 
-    match "about.md" $ do
+   {-- match "about.md" $ do
         route  $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
@@ -44,7 +48,7 @@ main = checkArgs <$> getArgs >>=
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page1.html" defaultContext
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls 
+            >>= relativizeUrls --}
 
     tags <- buildTags "topics/*" (fromCapture "tags/*.html")
 
@@ -52,9 +56,9 @@ main = checkArgs <$> getArgs >>=
         let title = "Results for " ++ tag
         route idRoute
         compile $ do
-            topics <- recentFirst =<< loadAll "topics/*"
+            posts <- recentFirst =<< loadAll "topics/*"
             let ctx = constField "title" title <>
-                      listField "topics" (topicCtx tags) (return topics) <>
+                      listField "posts" (topicCtx tags) (return posts) <>
                       defaultContext
 
             makeItem ""
@@ -75,7 +79,7 @@ main = checkArgs <$> getArgs >>=
     match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -90,7 +94,7 @@ main = checkArgs <$> getArgs >>=
                     listField "recentPosts" (topicCtx tags) (return sfPosts) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
