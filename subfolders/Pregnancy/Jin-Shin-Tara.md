@@ -3,7 +3,7 @@ title: Jin Shin Tara
 date: 2019-05-01
 tags: birth, pregnancy
 author: Stephanie Mines
-background: World_France_Garden_maze_022035_.jpg
+background: baby-ultrasound.png
 ---
 
 

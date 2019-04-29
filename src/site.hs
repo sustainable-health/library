@@ -140,11 +140,11 @@ main = checkArgs <$> getArgs >>=
     paginateRules paginate $ \page pattern -> do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAllSnapshots pattern "content"
+            topics <- recentFirst =<< loadAllSnapshots pattern "content"
             let indexCtx =
                     constField "title" (if page == 1 then "Reception desk"
                                                      else "Blog posts, page " ++ show page) <>
-                    listField "posts" (previewCtx tags) (return posts) <>
+                    listField "topics" (previewCtx tags) (return topics) <>
                     paginateContextPlus paginate page <>
                     mainCtx tags "topics/*"
 
