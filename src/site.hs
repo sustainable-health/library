@@ -29,14 +29,14 @@ main = checkArgs <$> getArgs >>=
         route   idRoute
         compile copyFileCompiler
 
-    match (fromList ["pages/about.md", "pages/404.md"]) $ do
+    {-- match (fromList ["pages/about.md", "pages/404.md"]) $ do
         route   $ stripPages `composeRoutes` setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls 
+            >>= relativizeUrls --}
 
-   {-- match "about.md" $ do
+    match "about.md" $ do
         route  $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
@@ -46,9 +46,9 @@ main = checkArgs <$> getArgs >>=
     match "404.md" $ do
         route  $ setExtension "html"
         compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/page1.html" defaultContext
+            >>= loadAndApplyTemplate "templates/404-page.html" defaultContext
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls --}
+            >>= relativizeUrls 
 
     tags <- buildTags "topics/*" (fromCapture "tags/*.html")
 
@@ -56,13 +56,13 @@ main = checkArgs <$> getArgs >>=
         let title = "Results for " ++ tag
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "topics/*"
+            topics <- recentFirst =<< loadAll "topics/*"
             let ctx = constField "title" title <>
-                      listField "posts" (topicCtx tags) (return posts) <>
+                      listField "topics" (topicCtx tags) (return topics) <>
                       defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/posts.html" ctx
+                >>= loadAndApplyTemplate "templates/topics.html" ctx
                 >>= loadAndApplyTemplate "templates/page.html" ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
@@ -79,7 +79,7 @@ main = checkArgs <$> getArgs >>=
     match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -89,12 +89,12 @@ main = checkArgs <$> getArgs >>=
             content <- pandocCompiler >>= saveSnapshot "content"
             let md = itemIdentifier content
             sf <- getMetadataField' md "subfolder" 
-            sfPosts  <- loadAll $ fromGlob $ "subfolders/" <> sf <> "/*"
+            sfTopics  <- loadAll $ fromGlob $ "subfolders/" <> sf <> "/*"
             let recentPostsCtx =
-                    listField "recentPosts" (topicCtx tags) (return sfPosts) <>
+                    listField "recentPosts" (topicCtx tags) (return sfTopics) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -150,7 +150,7 @@ main = checkArgs <$> getArgs >>=
 
             makeItem ""
                 >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/posts-preview-list.html" indexCtx
+                >>= loadAndApplyTemplate "templates/topics-preview-list.html" indexCtx
                 >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
                 >>= loadAndApplyTemplate "templates/default.html" indexCtx
                 >>= relativizeUrls
@@ -195,8 +195,8 @@ feedCfg = FeedConfiguration
 -- returns post pattern, configuration, command arguments
 checkArgs :: [String] -> (Pattern, Configuration, [String])
 checkArgs args = case partition (/= "--with-drafts") args of
-    (_, []) -> ("posts/*",                  defaultConfiguration,   args)
-    (as, _) -> ("posts/*" .||. "drafts/*",  draftConf,              as)
+    (_, []) -> ("topics/*",                  defaultConfiguration,   args)
+    (as, _) -> ("topics/*" .||. "drafts/*",  draftConf,              as)
     where draftConf = defaultConfiguration {
         destinationDirectory = "_draftSite"
       , storeDirectory = "_draftCache"
