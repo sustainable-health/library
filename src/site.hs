@@ -54,7 +54,7 @@ main = checkArgs <$> getArgs >>=
         compile $ do
             topics <- recentFirst =<< loadAll "topics/*"
             let ctx = constField "title" title <>
-                      listField "topics" (postCtx tags) (return topics) <>
+                      listField "topics" (topicCtx tags) (return topics) <>
                       defaultContext
 
             makeItem ""
@@ -75,7 +75,7 @@ main = checkArgs <$> getArgs >>=
     match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -87,10 +87,10 @@ main = checkArgs <$> getArgs >>=
             sf <- getMetadataField' md "subfolder" 
             sfPosts  <- loadAll $ fromGlob $ "subfolders/" <> sf <> "/*"
             let recentPostsCtx =
-                    listField "recentPosts" (postCtx tags) (return sfPosts) <>
+                    listField "recentPosts" (topicCtx tags) (return sfPosts) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -164,14 +164,20 @@ mainCtx tags pattern =
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
 
-postCtx :: Tags -> Context String
-postCtx tags =
+topicCtx :: Tags -> Context String
+topicCtx tags =
     dateField "date" "%B %e, %Y" <>
     tagsField "tags" tags <>
     defaultContext
 
+{-- postCtx :: Tags -> Context String
+postCtx tags =
+    dateField "date" "%B %e, %Y" <>
+    tagsField "tags" tags <>
+    defaultContext --}
+
 previewCtx :: Tags -> Context String
-previewCtx tags = teaserField "preview" "content" <> postCtx tags
+previewCtx tags = teaserField "preview" "content" <> topicCtx tags
 
 feedCfg :: FeedConfiguration
 feedCfg = FeedConfiguration
