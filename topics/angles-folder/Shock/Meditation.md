@@ -1,7 +1,8 @@
 ---
-title: Nature
+title: Meditation
+subtitle: Resolution of shock and trauma
 date: 2019-05-01
-tags: shock, trauma, panic, nature
+tags: shock, trauma, panic, meditation
 author: Stephanie Mines
 background: World_France_Garden_maze_022035_.jpg
 ---

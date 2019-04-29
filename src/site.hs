@@ -50,13 +50,13 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls 
 
-    tags <- buildTags "topics/*" (fromCapture "tags/*.html")
+    tags <- buildTags "topics/**" (fromCapture "tags/*.html")
 
     tagsRules tags $ \tag pattern -> do
         let title = "Results for " ++ tag
         route idRoute
         compile $ do
-            topics <- recentFirst =<< loadAll "topics/*"
+            topics <- recentFirst =<< loadAll "topics/**"
             let ctx = constField "title" title <>
                       listField "topics" (topicCtx tags) (return topics) <>
                       defaultContext
@@ -76,10 +76,10 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls --}
 
-    match "subfolders/*/*" $ do
+    match "topics/angles-folder/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/subfolder-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -88,13 +88,13 @@ main = checkArgs <$> getArgs >>=
         compile $ do
             content <- pandocCompiler >>= saveSnapshot "content"
             let md = itemIdentifier content
-            sf <- getMetadataField' md "subfolder" 
-            sfTopics  <- loadAll $ fromGlob $ "subfolders/" <> sf <> "/*"
-            let recentPostsCtx =
-                    listField "recentPosts" (topicCtx tags) (return sfTopics) <>
+            sf <- getMetadataField' md "angles-folder" 
+            sfTopics  <- loadAll $ fromGlob $ "topics/angles-folder/" <> sf <> "/*"
+            let anglesCtx =
+                    listField "angles" (topicCtx tags) (return sfTopics) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -162,8 +162,8 @@ stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
-    let recentPosts = angleItems "topics/*" >>= fmap (take 5) . recentFirst in
-         listField "recentPosts" (previewCtx tags) recentPosts <>
+    let angles = angleItems "topics/*" >>= fmap (take 5) . recentFirst in
+         listField "angles" (previewCtx tags) angles <> 
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
 

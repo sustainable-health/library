@@ -1,5 +1,6 @@
 ---
 title: Jin Shin Tara
+subtitle: Resolution of shock and trauma
 date: 2019-05-01
 tags: shock, trauma, panic, Tara
 author: Stephanie Mines

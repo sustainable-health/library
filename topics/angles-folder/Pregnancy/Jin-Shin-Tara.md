@@ -1,5 +1,6 @@
 ---
 title: Jin Shin Tara
+subtitle: Pre- and perinatal life
 date: 2019-05-01
 tags: birth, pregnancy
 author: Stephanie Mines
