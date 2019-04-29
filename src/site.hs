@@ -75,7 +75,7 @@ main = checkArgs <$> getArgs >>=
     match "subfolders/*/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -90,7 +90,7 @@ main = checkArgs <$> getArgs >>=
                     listField "recentPosts" (topicCtx tags) (return sfPosts) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/post-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> recentPostsCtx <> mainCtx tags "topics/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -117,7 +117,7 @@ main = checkArgs <$> getArgs >>=
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls --}
 
-    paginate <- buildPaginateWith postsGrouper "topics/*" postsPageId
+    paginate <- buildPaginateWith topicsGrouper "topics/*" topicsPageId
 
  {-   match "index.markdown" $ do
       route $ setExtension "html"
@@ -154,17 +154,12 @@ main = checkArgs <$> getArgs >>=
     match "templates/*" $ compile templateCompiler
 
 
---------------------------------------------------------------------------------
 stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
-<<<<<<< Updated upstream
-    let recentPosts = postItems "topics/*" >>= fmap (take 5) . recentFirst in
-=======
     let recentPosts = angleItems "topics/*" >>= fmap (take 5) . recentFirst in
->>>>>>> Stashed changes
-      listField "recentPosts" (previewCtx tags) recentPosts <>
+         listField "recentPosts" (previewCtx tags) recentPosts <>
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
 
@@ -204,16 +199,16 @@ checkArgs args = case partition (/= "--with-drafts") args of
       , tmpDirectory = "_draftCache/tmp"
       }
 
-postItems :: Pattern ->  Compiler [Item String]
-postItems pattern = do
+angleItems :: Pattern ->  Compiler [Item String]
+angleItems pattern = do
     identifiers <- getMatches "topics/*"
     return [Item identifier "" | identifier <- identifiers]
 
-postsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
-postsGrouper = liftM (paginateEvery 10) . sortRecentFirst
+topicsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
+topicsGrouper = liftM (paginateEvery 10) . sortRecentFirst
 
-postsPageId :: PageNumber -> Identifier
-postsPageId n = fromFilePath $ if (n == 1) then "index.html" else show n ++ "/index.html"
+topicsPageId :: PageNumber -> Identifier
+topicsPageId n = fromFilePath $ if (n == 1) then "index.html" else show n ++ "/index.html"
 
 paginateContextPlus :: Paginate -> PageNumber -> Context a
 paginateContextPlus pag currentPage = paginateContext pag currentPage <> mconcat
