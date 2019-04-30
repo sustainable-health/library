@@ -2,7 +2,7 @@
 title: Jin Shin Tara
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: shock, trauma, panic, Tara
+tags: lung, flu, asthma, Tara
 author: Stephanie Mines
 background: breath.jpg
 ---

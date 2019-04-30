@@ -8,6 +8,8 @@ angles-folder: Shock
 
 <img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" />
 
+Text taken from: [www.tara-approach.org](https://www.tara-approach.org/)
+
 ## How is Shock Different From Trauma?
 
  * Shock is the most severe form of trauma. It occurs when resources are non-existent, insufficient, or impossible to access.

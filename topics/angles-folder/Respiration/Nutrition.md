@@ -2,7 +2,7 @@
 title: Nutrition
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: shock, trauma, panic, nutrition
+tags: lung, flu, asthma, nutrition
 author: Stephanie Mines
 background: breath.jpg
 ---

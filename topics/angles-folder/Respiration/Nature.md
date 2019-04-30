@@ -2,7 +2,7 @@
 title: Nature
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: shock, trauma, panic, nature
+tags: lung, flu, asthma, nature
 author: Stephanie Mines
 background: breath.jpg
 ---

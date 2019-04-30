@@ -2,7 +2,7 @@
 title: Jin Shin Tara
 subtitle: Pre- and perinatal life
 date: 2019-05-01
-tags: birth, pregnancy
+tags: birth, pregnancy, Tara
 author: Stephanie Mines
 background: baby-ultrasound.png
 ---

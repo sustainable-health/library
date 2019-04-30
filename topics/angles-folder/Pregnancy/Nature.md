@@ -2,7 +2,7 @@
 title: Nature
 subtitle: Pre- and perinatal life
 date: 2019-05-01
-tags: shock, trauma, panic, nature
+tags: birth, pregnancy, nature
 author: Stephanie Mines
 background: baby-ultrasound.png
 ---

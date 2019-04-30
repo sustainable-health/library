@@ -2,7 +2,7 @@
 title: Meditation
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: shock, trauma, panic, meditation
+tags: lung, flu, asthma, meditation
 author: Stephanie Mines
 background: breath.jpg
 ---
