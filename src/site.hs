@@ -77,7 +77,7 @@ main = checkArgs <$> getArgs >>=
             >>= relativizeUrls --}
 
     match "topics/angles-folder/*/*" $ do
-        route $ setExtension "html"
+        route $ gsubRoute "angles-folder/" (const "") `composeRoutes` setExtension "html"
         compile $ pandocCompiler 
             >>= loadAndApplyTemplate "templates/subfolder-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
