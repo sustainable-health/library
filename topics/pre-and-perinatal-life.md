@@ -1,5 +1,6 @@
 ---
 title: Pre- and perinatal life
+date: 2019-04-26
 tags: birth, pregnancy
 author: Stephanie Mines
 background:  baby-ultrasound.png

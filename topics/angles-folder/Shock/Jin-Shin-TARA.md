@@ -1,5 +1,5 @@
 ---
-title: Jin Shin Tara
+title: Jin-Shin-TARA
 subtitle: Resolution of shock and trauma
 date: 2019-05-01
 tags: shock, trauma, panic, Tara
@@ -9,7 +9,10 @@ background: World_France_Garden_maze_022035_.jpg
 
 "The TARA approach is named for the buddhists deiy Tara, who is the embodiment of enlightened mercy and compassion in the female form. However, TARA is also an acronym for "tools for awakening resources and awareness." This is the TARA approach - a medicine bag of incredibly simple gifts that allows us to prevent and treat shock and trauma. The TARA approach combines energy medicine with language, communication and expression to halt the damages that shock inflicts on the nervous system, the immune system, the brain and the spirit" -- From the Book Punahele.
 
-Below are links to the available resources:
+Below are links to the available resources.
+
+If you wsih to see differet angles of this topic press [here](/topics/resolution-of-shock-and-trauma.html)
+
 
 [<img src="/images/Self_Care.png" style="float: left; margin: 10px;" width="150" height="200"/>](/docs/Jin-Shin-Self-Care.pdf) 
 <br/>

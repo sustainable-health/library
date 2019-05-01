@@ -1,5 +1,6 @@
 ---
 title: Resolution of shock and trauma
+date: 2019-04-27
 tags: shock, trauma, panic
 author: Stephanie Mines
 background: World_France_Garden_maze_022035_.jpg

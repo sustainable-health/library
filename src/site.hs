@@ -56,7 +56,7 @@ main = checkArgs <$> getArgs >>=
         let title = "Results for " ++ tag
         route idRoute
         compile $ do
-            topics <- recentFirst =<< loadAll "topics/**"
+            topics <- recentFirst =<< loadAll pattern
             let ctx = constField "title" title <>
                       listField "topics" (topicCtx tags) (return topics) <>
                       defaultContext
