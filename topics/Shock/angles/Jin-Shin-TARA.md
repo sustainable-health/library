@@ -11,7 +11,7 @@ background: World_France_Garden_maze_022035_.jpg
 
 Below are links to the available resources.
 
-If you wsih to see differet angles of this topic press [here](/topics/resolution-of-shock-and-trauma.html)
+If you wsih to see differet angles of this topic press [here](/topics/Shock/topic-text.html)
 
 
 [<img src="/images/Self_Care.png" style="float: left; margin: 10px;" width="150" height="200"/>](/docs/Jin-Shin-Self-Care.pdf) 
