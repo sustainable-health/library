@@ -11,9 +11,10 @@ import           System.FilePath.Posix (splitFileName)
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = checkArgs <$> getArgs >>=
-        \(postsPattern, conf, args) -> withArgs args $ hakyllWith conf $ do
-
+main = hakyll $ do
+    -- checkArgs <$> getArgs >>=
+    --     \(postsPattern, conf, args) -> withArgs args $ hakyllWith conf $ do
+    
     match "images/**" $ do
         route   idRoute
         compile copyFileCompiler
@@ -196,15 +197,15 @@ feedCfg = FeedConfiguration
 
 -- Check argrumens for '--with-drafts'
 -- returns post pattern, configuration, command arguments
-checkArgs :: [String] -> (Pattern, Configuration, [String])
-checkArgs args = case partition (/= "--with-drafts") args of
-    (_, []) -> ("topics/*",                  defaultConfiguration,   args)
-    (as, _) -> ("topics/*" .||. "drafts/*",  draftConf,              as)
-    where draftConf = defaultConfiguration {
-        destinationDirectory = "_draftSite"
-      , storeDirectory = "_draftCache"
-      , tmpDirectory = "_draftCache/tmp"
-      }
+-- checkArgs :: [String] -> (Pattern, Configuration, [String])
+-- checkArgs args = case partition (/= "--with-drafts") args of
+--    (_, []) -> ("topics/*/",                  defaultConfiguration,   args)
+--    (as, _) -> ("topics/*" .||. "drafts/*",  draftConf,              as)
+--    where draftConf = defaultConfiguration {
+--        destinationDirectory = "_draftSite"
+--      , storeDirectory = "_draftCache"
+--      , tmpDirectory = "_draftCache/tmp"
+--      } 
 
 angleItems :: Pattern ->  Compiler [Item String]
 angleItems pattern = do
