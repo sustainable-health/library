@@ -1,7 +1,13 @@
 <ol>
     $for(topics)$
-        <li>
-            <a href="$url$">$title$</a> 
-        </li>
+        $if(subtitle)$
+            <li>
+                <a href="$url$">$title$: $subtitle$</a> 
+            </li>
+        $else$
+           <li>
+                <a href="$url$">$title$</a> 
+            </li>
+        $endif$
     $endfor$
 </ol>
