@@ -82,7 +82,7 @@ main = hakyll $ do
        -- route $ gsubRoute "topics/*/" (const "topics/") `composeRoutes` setExtension "html"
         route $ setExtension "html"
         compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/subfolder-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+            >>= loadAndApplyTemplate "templates/angles-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
