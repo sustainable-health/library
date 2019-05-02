@@ -186,14 +186,14 @@ postCtx tags =
 previewCtx :: Tags -> Context String
 previewCtx tags = teaserField "preview" "content" <> topicCtx tags
 
-feedCfg :: FeedConfiguration
-feedCfg = FeedConfiguration
-    { feedTitle = "Mike Limansky blog"
-    , feedDescription = "Latest blog posts"
-    , feedAuthorName = "Mike Limansky"
-    , feedAuthorEmail = "mike.limansky@gmail.com"
-    , feedRoot = "http://www.limansky.me"
-    }
+-- feedCfg :: FeedConfiguration
+-- feedCfg = FeedConfiguration
+--     { feedTitle = "Mike Limansky blog"
+--     , feedDescription = "Latest blog posts"
+--     , feedAuthorName = "Mike Limansky"
+--     , feedAuthorEmail = "mike.limansky@gmail.com"
+--     , feedRoot = "http://www.limansky.me"
+--     }
 
 -- Check argrumens for '--with-drafts'
 -- returns post pattern, configuration, command arguments
