@@ -4,7 +4,7 @@ date: 2019-04-25
 tags: lung, flu, asthma
 author: encyclopaedia Britannica
 background: breath.jpg
-angles-folder: Respiration
+angles-folder: angles
 ---
 
 <img src="/images/lungs.jpg" style="float: left; margin: 10px;" width="200" height="200" />

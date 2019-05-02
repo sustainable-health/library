@@ -4,7 +4,7 @@ date: 2019-04-27
 tags: shock, trauma, panic
 author: Stephanie Mines
 background: World_France_Garden_maze_022035_.jpg
-angles-folder: Shock
+angles-folder: angles
 ---
 
 <img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" />

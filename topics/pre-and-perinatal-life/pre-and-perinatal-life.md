@@ -4,7 +4,7 @@ date: 2019-04-26
 tags: birth, pregnancy
 author: Stephanie Mines
 background:  baby-ultrasound.png
-angles-folder: Pregnancy
+angles-folder: angles
 ---
 
 <img src="/images/footprint1.jpg" style="float: left; margin: 10px;" width="200" height="200" />

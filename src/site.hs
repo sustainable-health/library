@@ -7,6 +7,7 @@ import qualified Data.Map            as M
 import           Data.Monoid         ((<>))
 import           Hakyll
 import           System.Environment  (getArgs, withArgs)
+import           System.FilePath.Posix (splitFileName)
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -76,25 +77,27 @@ main = checkArgs <$> getArgs >>=
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls --}
 
-    match "topics/angles-folder/*/*" $ do
-        route $ gsubRoute "angles-folder/" (const "") `composeRoutes` setExtension "html"
+    match "topics/*/*/*" $ do
+       -- route $ gsubRoute "topics/*/" (const "topics/") `composeRoutes` setExtension "html"
+        route $ setExtension "html"
         compile $ pandocCompiler 
             >>= loadAndApplyTemplate "templates/subfolder-right-column.html" (topicCtx tags <> mainCtx tags "topics")
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    match "topics/*" $ do
+    match "topics/*/*.md" $ do
         route $ setExtension "html"
         compile $ do
             content <- pandocCompiler >>= saveSnapshot "content"
             let md = itemIdentifier content
+                topicDir = fst $ splitFileName $ toFilePath md
             sf <- getMetadataField' md "angles-folder" 
-            sfTopics  <- loadAll $ fromGlob $ "topics/angles-folder/" <> sf <> "/*"
+            sfTopics  <- loadAll $ fromGlob $ topicDir <> sf <> "/*"
             let anglesCtx =
                     listField "angles" (topicCtx tags) (return sfTopics) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*") content
+            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -121,7 +124,7 @@ main = checkArgs <$> getArgs >>=
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls --}
 
-    paginate <- buildPaginateWith topicsGrouper "topics/*" topicsPageId
+    paginate <- buildPaginateWith topicsGrouper "topics/*/*" topicsPageId
 
  {-   match "index.markdown" $ do
       route $ setExtension "html"
@@ -146,7 +149,7 @@ main = checkArgs <$> getArgs >>=
                                                      else "Blog posts, page " ++ show page) <>
                     listField "topics" (previewCtx tags) (return topics) <>
                     paginateContextPlus paginate page <>
-                    mainCtx tags "topics/*"
+                    mainCtx tags "topics/*/*"
 
             makeItem ""
                 >>= applyAsTemplate indexCtx
@@ -162,7 +165,7 @@ stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
-    let angles = angleItems "topics/*" >>= fmap (take 5) . recentFirst in
+    let angles = angleItems "topics/*/*" >>= fmap (take 5) . recentFirst in
          listField "angles" (previewCtx tags) angles <> 
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
@@ -205,7 +208,7 @@ checkArgs args = case partition (/= "--with-drafts") args of
 
 angleItems :: Pattern ->  Compiler [Item String]
 angleItems pattern = do
-    identifiers <- getMatches "topics/*"
+    identifiers <- getMatches "topics/*/*"
     return [Item identifier "" | identifier <- identifiers]
 
 topicsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
