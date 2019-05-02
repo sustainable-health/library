@@ -147,7 +147,7 @@ main = hakyll $ do
             topics <- recentFirst =<< loadAllSnapshots pattern "content"
             let indexCtx =
                     constField "title" (if page == 1 then "Reception desk"
-                                                     else "Blog posts, page " ++ show page) <>
+                                                     else "More topics, page " ++ show page) <>
                     listField "topics" (previewCtx tags) (return topics) <>
                     paginateContextPlus paginate page <>
                     mainCtx tags "topics/*/*"
