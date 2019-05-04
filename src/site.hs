@@ -93,9 +93,9 @@ main = hakyll $ do
             let md = itemIdentifier content
                 topicDir = fst $ splitFileName $ toFilePath md
             sf <- getMetadataField' md "angles-folder" 
-            sfTopics  <- loadAll $ fromGlob $ topicDir <> sf <> "/*"
+            angles  <- loadAll $ fromGlob $ topicDir <> sf <> "/*"
             let anglesCtx =
-                    listField "angles" (topicCtx tags) (return sfTopics) <>
+                    listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
 
             loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*/*") content
