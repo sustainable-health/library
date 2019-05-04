@@ -110,14 +110,14 @@ stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
-    let angles = angleItems "topics/*/*" >>= fmap (take 5) . recentFirst in
+    let angles = angleItems "topics/*/*/*" >>= recentFirst in
          listField "angles" (previewCtx tags) angles <> 
       tagCloudField "tagCloud" 75 200 tags <>
       defaultContext
 
 topicCtx :: Tags -> Context String
 topicCtx tags =
-    dateField "date" "%B %e, %Y" <>
+  --  dateField "date" "%B %e, %Y" <>
     tagsField "tags" tags <>
     defaultContext
 
