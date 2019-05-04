@@ -12,8 +12,6 @@ import           System.FilePath.Posix (splitFileName)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    -- checkArgs <$> getArgs >>=
-    --     \(postsPattern, conf, args) -> withArgs args $ hakyllWith conf $ do
     
     match "images/**" $ do
         route   idRoute
@@ -30,13 +28,6 @@ main = hakyll $ do
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
-
-    {-- match (fromList ["pages/about.md", "pages/404.md"]) $ do
-        route   $ stripPages `composeRoutes` setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/page.html" defaultContext
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls --}
 
     match "about.md" $ do
         route  $ setExtension "html"
@@ -69,17 +60,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
-    {-- match postsPattern $ do
-        route $ setExtension "html"
-        compile $ pandocCompiler
-            >>= saveSnapshot "content"
-            -- >>= loadAndApplyTemplate "templates/post-with-comment.html" defaultContext
-            >>= loadAndApplyTemplate "templates/post-right-column.html" (postCtx tags <> mainCtx tags postsPattern)
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls --}
-
     match "topics/*/*/*" $ do
-       -- route $ gsubRoute "topics/*/" (const "topics/") `composeRoutes` setExtension "html"
         route $ setExtension "html"
         compile $ pandocCompiler 
             >>= loadAndApplyTemplate "templates/angles-right-column.html" (topicCtx tags <> mainCtx tags "topics")
@@ -102,44 +83,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    {-- create ["atom.xml"] $ do
-        route idRoute
-        compile $ do
-            let feedCtx = (postCtx tags) <> bodyField "description"
-            posts <- fmap (take 10) . recentFirst =<<
-                loadAllSnapshots postsPattern "content"
-            renderAtom feedCfg feedCtx posts --}
-
-    {-- create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll postsPattern
-            let archiveCtx =
-                    listField "posts" (postCtx tags) (return posts) <>
-                    constField "title" "Archives"            <>
-                    defaultContext
-
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/page.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls --}
-
     paginate <- buildPaginateWith topicsGrouper "topics/*/*" topicsPageId
-
- {-   match "index.markdown" $ do
-      route $ setExtension "html"
-      compile $ do
-        let
-          indexCtx =
-            constField "title" "Index" `mappend`
-            defaultContext
-
-        pandocCompiler
-         >>= applyAsTemplate indexCtx
-         >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
-         >>= loadAndApplyTemplate "templates/default.html" indexCtx
-         >>= relativizeUrls -}
 
     paginateRules paginate $ \page pattern -> do
         route idRoute
@@ -177,35 +121,8 @@ topicCtx tags =
     tagsField "tags" tags <>
     defaultContext
 
-{-- postCtx :: Tags -> Context String
-postCtx tags =
-    dateField "date" "%B %e, %Y" <>
-    tagsField "tags" tags <>
-    defaultContext --}
-
 previewCtx :: Tags -> Context String
 previewCtx tags = teaserField "preview" "content" <> topicCtx tags
-
--- feedCfg :: FeedConfiguration
--- feedCfg = FeedConfiguration
---     { feedTitle = "Mike Limansky blog"
---     , feedDescription = "Latest blog posts"
---     , feedAuthorName = "Mike Limansky"
---     , feedAuthorEmail = "mike.limansky@gmail.com"
---     , feedRoot = "http://www.limansky.me"
---     }
-
--- Check argrumens for '--with-drafts'
--- returns post pattern, configuration, command arguments
--- checkArgs :: [String] -> (Pattern, Configuration, [String])
--- checkArgs args = case partition (/= "--with-drafts") args of
---    (_, []) -> ("topics/*/",                  defaultConfiguration,   args)
---    (as, _) -> ("topics/*" .||. "drafts/*",  draftConf,              as)
---    where draftConf = defaultConfiguration {
---        destinationDirectory = "_draftSite"
---      , storeDirectory = "_draftCache"
---      , tmpDirectory = "_draftCache/tmp"
---      } 
 
 angleItems :: Pattern ->  Compiler [Item String]
 angleItems pattern = do
