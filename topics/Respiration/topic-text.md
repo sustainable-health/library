@@ -2,9 +2,9 @@
 title: Respiratory conditions
 date: 2019-04-25
 tags: lung, flu, asthma
-author: encyclopaedia Britannica
+author: Encyclopaedia Britannica
 background: breath.jpg
-angles-folder: angles
+parent: Respiration
 ---
 
 <img src="/images/lungs.jpg" style="float: left; margin: 10px;" width="200" height="200" />
