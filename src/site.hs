@@ -12,6 +12,11 @@ import           System.FilePath.Posix (splitFileName)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+
+    let
+        topicMdPattern = "topics/*/*.md"
+        topicPattern = "topics/*/*"
+        anglePattern = "topics/*/*/*"
     
     match "images/**" $ do
         route   idRoute
@@ -60,7 +65,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
-    match "topics/*/*/*" $ do
+    match anglePattern $ do
         route $ setExtension "html"
         compile $ do
             content <- pandocCompiler
@@ -73,7 +78,7 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    match "topics/*/*.md" $ do
+    match topicMdPattern $ do
         route $ setExtension "html"
         compile $ do
             content <- pandocCompiler >>= saveSnapshot "content"
@@ -85,11 +90,11 @@ main = hakyll $ do
                     listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*/*") content
+            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> mainCtx tags topicPattern) content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    paginate <- buildPaginateWith topicsGrouper "topics/*/*" topicsPageId
+    paginate <- buildPaginateWith topicsGrouper topicPattern topicsPageId
 
     paginateRules paginate $ \page pattern -> do
         route idRoute
@@ -115,8 +120,8 @@ main = hakyll $ do
 stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
-mainCtx tags pattern =
-    let angles = angleItems "topics/*/*/*" 
+mainCtx tags anglePattern =
+    let angles = angleItems anglePattern 
     in listField "angles" (previewCtx tags) angles <>
             tagCloudField "tagCloud" 75 200 tags <>
             defaultContext
@@ -147,6 +152,9 @@ angleItems pattern = do
 
 topicsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
 topicsGrouper = liftM (paginateEvery 10) . sortRecentFirst
+
+resourcesGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
+resourcesGrouper = liftM (paginateEvery 10) . sortRecentFirst
 
 topicsPageId :: PageNumber -> Identifier
 topicsPageId n = fromFilePath $ if (n == 1) then "index.html" else show n ++ "/index.html"
