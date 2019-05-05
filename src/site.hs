@@ -94,9 +94,9 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
-    paginate <- buildPaginateWith topicsGrouper topicPattern topicsPageId
+    paginateTopics <- buildPaginateWith topicsGrouper topicPattern topicsPageId
 
-    paginateRules paginate $ \page pattern -> do
+    paginateRules paginateTopics $ \page pattern -> do
         route idRoute
         compile $ do
             topics <- recentFirst =<< loadAllSnapshots pattern "content"
@@ -104,7 +104,7 @@ main = hakyll $ do
                     constField "title" (if page == 1 then "Reception desk"
                                                      else "More topics, page " ++ show page) <>
                     listField "topics" (previewCtx tags) (return topics) <>
-                    paginateContextPlus paginate page <>
+                    paginateContextPlus paginateTopics page <>
                     mainCtx tags "topics/*/*"
 
             makeItem ""
