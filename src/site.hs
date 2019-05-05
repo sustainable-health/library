@@ -73,7 +73,7 @@ main = hakyll $ do
                 ownId = itemIdentifier content
                 siblings = siblingAnglesCtx ownId
             loadAndApplyTemplate "templates/resources.html" 
-                (siblings <> topicCtx tags <> mainCtx tags "topics")
+                (siblings <> topicCtx tags <> tagsCtx tags)
                 content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
@@ -90,7 +90,7 @@ main = hakyll $ do
                     listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> mainCtx tags topicPattern) content
+            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> tagsCtx tags) content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -105,7 +105,7 @@ main = hakyll $ do
                                                      else "More topics, page " ++ show page) <>
                     listField "topics" (previewCtx tags) (return topics) <>
                     paginateContextPlus paginateTopics page <>
-                    mainCtx tags "topics/*/*"
+                    tagsCtx tags 
 
             makeItem ""
                 >>= applyAsTemplate indexCtx
@@ -119,10 +119,8 @@ main = hakyll $ do
 
 stripPages = gsubRoute "pages/" $ const ""
 
-mainCtx :: Tags -> Pattern -> Context String
-mainCtx tags anglePattern =
-    let angles = angleItems anglePattern 
-    in listField "angles" (previewCtx tags) angles <>
+tagsCtx :: Tags -> Context String
+tagsCtx tags =
             tagCloudField "tagCloud" 75 200 tags <>
             defaultContext
 
