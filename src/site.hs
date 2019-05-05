@@ -62,8 +62,14 @@ main = hakyll $ do
 
     match "topics/*/*/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler 
-            >>= loadAndApplyTemplate "templates/angles-right-column.html" (topicCtx tags <> mainCtx tags "topics")
+        compile $ do
+            content <- pandocCompiler
+            let
+                ownId = itemIdentifier content
+                siblings = siblingAnglesCtx ownId
+            loadAndApplyTemplate "templates/topic-right-column.html" 
+                (siblings <> topicCtx tags <> mainCtx tags "topics")
+                content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -73,8 +79,8 @@ main = hakyll $ do
             content <- pandocCompiler >>= saveSnapshot "content"
             let md = itemIdentifier content
                 topicDir = fst $ splitFileName $ toFilePath md
-            sf <- getMetadataField' md "angles-folder" 
-            angles  <- loadAll $ fromGlob $ topicDir <> sf <> "/*"
+            -- sf <- getMetadataField' md "angles-folder" 
+            angles  <- loadAll $ fromGlob $ topicDir <> "angles/*"
             let anglesCtx =
                     listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
@@ -110,10 +116,20 @@ stripPages = gsubRoute "pages/" $ const ""
 
 mainCtx :: Tags -> Pattern -> Context String
 mainCtx tags pattern =
-    let angles = angleItems "topics/*/*/*" >>= recentFirst in
-         listField "angles" (previewCtx tags) angles <> 
-      tagCloudField "tagCloud" 75 200 tags <>
-      defaultContext
+    let angles = angleItems "topics/*/*/*" 
+    in listField "angles" (previewCtx tags) angles <>
+            tagCloudField "tagCloud" 75 200 tags <>
+            defaultContext
+
+siblingAnglesCtx :: Identifier -> Context String
+siblingAnglesCtx angleId =
+    listField "angles" defaultContext items <> defaultContext
+    where
+        anglesDir = fst $ splitFileName $ toFilePath angleId
+        ids = getMatches $ fromGlob $ anglesDir <> "*"
+        idsExceptOwn = filter (/= angleId) <$> ids
+        f id = Item id ""
+        items = (fmap . fmap) f idsExceptOwn
 
 topicCtx :: Tags -> Context String
 topicCtx tags =
@@ -124,9 +140,9 @@ topicCtx tags =
 previewCtx :: Tags -> Context String
 previewCtx tags = teaserField "preview" "content" <> topicCtx tags
 
-angleItems :: Pattern ->  Compiler [Item String]
+angleItems :: Pattern -> Compiler [Item String]
 angleItems pattern = do
-    identifiers <- getMatches "topics/*/*"
+    identifiers <- getMatches pattern
     return [Item identifier "" | identifier <- identifiers]
 
 topicsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
