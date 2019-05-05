@@ -7,7 +7,7 @@ author: Stephanie Mines
 background: breath.jpg
 ---
 
-If you wsih to see differet angles of this topic press [here](/topics/Respiration/topic-text.html)
+If you wish to go back to the topic page press [here](/topics/Respiration/topic-text.html)
 
 Below are links to the available resources:
 

@@ -67,7 +67,7 @@ main = hakyll $ do
             let
                 ownId = itemIdentifier content
                 siblings = siblingAnglesCtx ownId
-            loadAndApplyTemplate "templates/topic-right-column.html" 
+            loadAndApplyTemplate "templates/resources.html" 
                 (siblings <> topicCtx tags <> mainCtx tags "topics")
                 content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
@@ -85,7 +85,7 @@ main = hakyll $ do
                     listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-right-column.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*/*") content
+            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> mainCtx tags "topics/*/*") content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 

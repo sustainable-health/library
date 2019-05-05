@@ -1,2 +1,16 @@
-$partial("templates/topic-header.html")$
-$partial("templates/main-right-column.html")$
+<div class="container">
+  <div class="col-md-9">
+    $body$
+  </div>
+  <div class="col-md-3">
+    <ul class="recent-posts">
+    <h3>More angles</h3>
+    <ul class="angles">
+      $for(angles)$
+        <li><a href="$url$">$title$</a></li>
+      $endfor$
+    </ul>
+    <h3>Tag cloud</h3>
+       $tagCloud$
+  </div>
+</div>

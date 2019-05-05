@@ -7,7 +7,7 @@ author: Stephanie Mines
 background: baby-ultrasound.png
 ---
 
-If you wsih to see differet angles of this topic press [here](/topics/Pregnancy/topic-text.html)
+If you wish to go back to the topic page press [here](/topics/Pregnancy/topic-text.html)
 
 Below are links to the available resources:
 
