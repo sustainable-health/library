@@ -3,7 +3,9 @@
     $body$
   </div>
   <div class="col-md-3">
-    <ul class="recent-posts">
+    $if(parent)$    
+      <a href=/topics/$parent$/topic-text.html><h3>Back to topic</h3></a>
+    $endif$ 
     <h3>More angles</h3>
     <ul class="angles">
       $for(angles)$
