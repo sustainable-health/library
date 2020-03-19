@@ -14,3 +14,10 @@ Welcome to the site of the Cultural Library of Sustainable Helath!
 
 
 <!--…or you can find more in the [archives](/archive.html).-->
+
+<video src="/videos/VID_20200305_121158.mp4"
+       poster="/images/swirl.jpg"
+       width="400" height="300"
+       preload
+       controls
+       >

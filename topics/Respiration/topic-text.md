@@ -3,11 +3,11 @@ title: Respiratory conditions
 date: 2019-04-25
 tags: lung, flu, asthma
 author: Encyclopaedia Britannica
-background: breath.jpg
+background: blow-dandelion.jpg
 parent: Respiration
 ---
 
-<img src="/images/lungs.jpg" style="float: left; margin: 10px;" width="200" height="200" />
+<img src="/images/lungs.jpeg" style="float: left; margin-right: 20px;" width="200" height="200" />
 
 Text taken from: [www.britannica.com](https://www.britannica.com/science/respiratory-disease)
 

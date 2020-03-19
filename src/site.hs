@@ -17,12 +17,17 @@ main = hakyll $ do
         topicMdPattern = "topics/*/*.md"
         topicPattern = "topics/*/*"
         anglePattern = "topics/*/*/*"
+        angleMdPattern = "topics/*/*/*.md"
     
     match "images/**" $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "docs/*" $ do
+    {--match "docs/*" $ do
+        route   idRoute
+        compile copyFileCompiler--}
+
+    match "videos/*" $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -34,7 +39,7 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "about.md" $ do
+    match (fromList ["about.md", "contact.markdown"]) $ do
         route  $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/page.html" defaultContext
@@ -65,7 +70,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
-    match anglePattern $ do
+    match angleMdPattern $ do
         route $ setExtension "html"
         compile $ do
             content <- pandocCompiler
@@ -73,7 +78,7 @@ main = hakyll $ do
                 ownId = itemIdentifier content
                 siblings = siblingAnglesCtx ownId
             loadAndApplyTemplate "templates/resources.html" 
-                (siblings <> topicCtx tags <> tagsCtx tags)
+                (siblings <> topicCtx tags <> tagCtx tags)
                 content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
@@ -85,12 +90,12 @@ main = hakyll $ do
             let md = itemIdentifier content
                 topicDir = fst $ splitFileName $ toFilePath md
             -- sf <- getMetadataField' md "angles-folder" 
-            angles  <- loadAll $ fromGlob $ topicDir <> "angles/*"
+            angles  <- loadAll $ fromGlob $ topicDir <> "angles/*.md"
             let anglesCtx =
                     listField "angles" (topicCtx tags) (return angles) <>
                     defaultContext
 
-            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> tagsCtx tags) content
+            loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> tagCtx tags) content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls    
 
@@ -105,7 +110,7 @@ main = hakyll $ do
                                                      else "More topics, page " ++ show page) <>
                     listField "topics" (previewCtx tags) (return topics) <>
                     paginateContextPlus paginateTopics page <>
-                    tagsCtx tags 
+                    tagCtx tags 
 
             makeItem ""
                 >>= applyAsTemplate indexCtx
@@ -119,8 +124,8 @@ main = hakyll $ do
 
 stripPages = gsubRoute "pages/" $ const ""
 
-tagsCtx :: Tags -> Context String
-tagsCtx tags =
+tagCtx :: Tags -> Context String
+tagCtx tags =
             tagCloudField "tagCloud" 75 200 tags <>
             defaultContext
 
@@ -151,11 +156,12 @@ angleItems pattern = do
 topicsGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
 topicsGrouper = liftM (paginateEvery 10) . sortRecentFirst
 
-resourcesGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
-resourcesGrouper = liftM (paginateEvery 10) . sortRecentFirst
 
 topicsPageId :: PageNumber -> Identifier
 topicsPageId n = fromFilePath $ if (n == 1) then "index.html" else show n ++ "/index.html"
+
+resourcesGrouper :: MonadMetadata m => [Identifier] -> m [[Identifier]]
+resourcesGrouper = liftM (paginateEvery 10) . sortRecentFirst
 
 paginateContextPlus :: Paginate -> PageNumber -> Context a
 paginateContextPlus pag currentPage = paginateContext pag currentPage <> mconcat

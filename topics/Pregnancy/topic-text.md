@@ -3,11 +3,11 @@ title: Pre- and perinatal life
 date: 2019-04-26
 tags: birth, pregnancy
 author: Stephanie Mines
-background:  baby-ultrasound.png
+background: pregnancy.png
 parent: Pregnancy
 ---
 
-<img src="/images/footprint1.jpg" style="float: left; margin: 10px;" width="200" height="200" />
+<img src="/images/sand-footprint-water-beach.jpg" style="float: left; margin-right: 20px;" width="200" height="200" />
 
 The field of Pre and Perinatal Psychology is quite new. As science reveals
 more about the neurology and physiology of our earliest development during

@@ -3,11 +3,11 @@ title: Resolution of shock and trauma
 date: 2019-04-27
 tags: shock, trauma, panic
 author: Stephanie Mines
-background: World_France_Garden_maze_022035_.jpg
+background: labyrinth.jpg
 parent: Shock
 ---
 
-<img src="/images/swirl.jpg" style="float: left; margin: 10px;" width="200" height="200" />
+<img src="/images/swirl.jpg" style="float: left; margin-right: 30px;" width="200" height="200" />
 
 Text taken from: [www.tara-approach.org](https://www.tara-approach.org/)
 
