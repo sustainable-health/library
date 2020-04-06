@@ -3,7 +3,7 @@ title: Sustainable health
 subtitle: in a climate changing world
 ---
 
-The Sustainable Health Cultural Library contains resources that
+The Sustainable Health Cultural Library contains resources that 
 
   * address the health consequences of climate change
   * are empowerment based and available readily

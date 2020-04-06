@@ -66,7 +66,7 @@ main = hakyll $ do
 
             makeItem ""
                 >>= loadAndApplyTemplate "templates/topics.html" ctx
-                >>= loadAndApplyTemplate "templates/page.html" ctx
+                >>= loadAndApplyTemplate "templates/tags.html" ctx
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 

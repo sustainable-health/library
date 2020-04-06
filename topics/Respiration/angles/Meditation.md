@@ -2,7 +2,7 @@
 title: Meditation
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: lung, flu, asthma, meditation
+tags: respiration, meditation
 author: Stephanie Mines
 background: blow-dandelion.jpg
 parent: Respiration

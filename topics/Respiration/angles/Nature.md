@@ -2,7 +2,7 @@
 title: Nature
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: lung, flu, asthma, nature
+tags: respiration, nature
 author: Stephanie Mines
 background: blow-dandelion.jpg
 parent: Respiration

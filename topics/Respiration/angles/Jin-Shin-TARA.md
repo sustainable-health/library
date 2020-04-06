@@ -2,7 +2,7 @@
 title: Jin-Shin-TARA
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: lung, flu, asthma, Tara
+tags: respiration, Tara
 author: Stephanie Mines
 background: blow-dandelion.jpg
 parent: Respiration

@@ -2,7 +2,7 @@
 title: Nutrition
 subtitle: Respiratory conditions
 date: 2019-05-01
-tags: lung, flu, asthma, nutrition
+tags: respiration, nutrition
 author: Stephanie Mines
 background: blow-dandelion.jpg
 parent: Respiration
