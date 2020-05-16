@@ -23,9 +23,9 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    {--match "docs/*" $ do
+    match "docs/*" $ do
         route   idRoute
-        compile copyFileCompiler--}
+        compile copyFileCompiler
 
     match "videos/*" $ do
         route   idRoute
@@ -70,6 +70,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
+    
     match angleMdPattern $ do
         route $ setExtension "html"
         compile $ do
@@ -97,7 +98,24 @@ main = hakyll $ do
 
             loadAndApplyTemplate "templates/topic-expanded.html" (topicCtx tags <> anglesCtx <> tagCtx tags) content
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls    
+            >>= relativizeUrls   
+
+    -- match "index.html" $ do
+    --     route idRoute
+    --     compile $ do
+    --         topics <- loadAll "topics/*.md"
+    --         -- recentFirst =<< loadAll "posts/*"
+    --         let indexCtx =
+    --                 listField "topics" (topicCtx tags) (return topics) `mappend` 
+    --                 constField "title" "Reception Desk"  `mappend`
+    --                 (tagCtx tags)  <>          
+    --                 defaultContext
+
+    --         getResourceBody
+    --             >>= applyAsTemplate indexCtx
+    --             >>= loadAndApplyTemplate "templates/page-right-column.html" indexCtx
+    --             >>= loadAndApplyTemplate "templates/default.html" indexCtx
+    --             >>= relativizeUrls
 
     paginateTopics <- buildPaginateWith topicsGrouper topicPattern topicsPageId
 
