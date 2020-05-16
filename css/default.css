@@ -16,3 +16,57 @@ ul.angles li { list-style-type: none;}
 
 a.btn.continue:hover { background-color: #0085A1; color: #ffffff; }
 .post-heading .tags a { color: #ffffff; text-decoration: underline; }
+
+
+#trifold {
+  color: #ffffff;
+  background-color: #668959;
+  font-size: 70%;
+
+}
+
+#trifold h4, #trifold h3, #about-strong1 {
+  text-align: center;
+}
+
+#about-intro {
+  margin-top: 15px;
+  border-top: 8px solid #ffffff;
+  border-bottom: 8px solid #ffffff;
+
+}
+
+#about-col-2 {
+  background-image: url("/images/forest.jpg");
+
+
+}
+
+#about-col-2 h5 {
+  text-align: center;
+  font-style: italic;
+  padding: 0px;
+  font-size: 105%;
+
+}
+
+#about-intro h4 {
+  font-weight: normal;
+}
+
+
+span.little {
+  font-size: 70%;
+}
+
+
+#trifold a {
+  color: #ffffff;
+  font-style: italic;
+}
+
+
+#trifold ol {
+  padding-left: 10px;
+  padding-top: 10px;
+}
